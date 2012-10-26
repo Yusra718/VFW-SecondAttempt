@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- Here is where the link leads to -->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="My first HTML document" />
+        <meta name="keywords" content="holiday, decorating" />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="user-scalable=yes, width=device-width" />
+        <title>The Holiday Spirit</title>
+    </head>
+    <body>
+        <h1>Decorating Supplies</h1>
+        <nav>
+            <a href="#" id="clearstoreddata">Clear AllDecorating Supplies</a>
+            <a href="#" id="displaydata">My Decorations</a>
+        </nav>
+        <form action="" method="post" id="decorateForm">
+            <fieldset>
+                <legend>Choose Decorating Supplies</legend>
+                <ul>
+                    <li>Type
+                        <ul>
+                            <li><input type="radio" value="Tinsel" id="tinsel" name="type" /><label for="tinsel">Tinsel</label></li>
+                            <li><input type="radio" value="Lights" id="lights" name="type" /><label for="lights">Lights</label></li>
+                            <li><input type="radio" value="Ceiling Decorations" id="ceilingdecorations" name="type" /><label for="ceilingdecorations">Ceiling Decorations</label></li>
+                            <li><input type="radio" value="Balloons" id="ballons" name="type" /><label for="balloons">Balloons</label></li>
+                        </ul>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>Customize Supplies</legend>
+                <ul>
+                    <li>Balloon Color Type
+                        <ul>
+                            <li><input type="radio" value="Metallic" id="metallic" name="balloonType" /><label for="metallic">Metallic</label></li>
+                            <li><input type="radio" value="Regular" id="regular" name="balloonType" /><label for="regular">Regular</label></li>
+                        </ul>
+                    </li>
+                    <li>Tinsel Colors
+                        <ul>
+                            <li><input type="radio" value="Multiple Colors" id="multiple" name="TinselType" /><label for="multiple">Multiple Colors in Tinsels</label></li>
+                            <li><input type="radio" value="Separated Colors" id="separate" name="TinselType" /><label for="separate">Separate Tinsels</label></li>
+                        </ul>
+                    </li>
+                    <li>Color(s)
+                        <ul>
+                            <li><input type="checkbox" value="Blue" id="blue" /><label for="blue">Blue</label></li>
+                            <li><input type="checkbox" value="Green" id="green" /><label for="green">Green</label></li>
+                            <li><input type="checkbox" value="Red" id="red" /><label for="red">Red</label></li>
+                            <li><input type="checkbox" value="Pink" id="pink" /><label for="pink">Pink</label></li>
+                            <li><input type="checkbox" value="Purple" id="purple" /><label for="purple">Purple</label></li>
+                            <li><input type="checkbox" value="Orange" id="orange" /><label for="orange">Orange</label></li>
+                            <li><input type="checkbox" value="Black" id="black" /><label for="black">Black</label></li>
+                            <li><input type="checkbox" value="White" id="white" /><label for="white">White</label></li>
+                            <li><input type="checkbox" value="Yellow" id="yellow" /><label for="yellow">Yellow</label></li>
+                            <li><input type="checkbox" value="Gray" id="gray" /><label for="gray">Gray</label></li>
+                        </ul>
+                    </li>
+                    <li>How Many Packs Do You Want?
+                        <ul>
+                            <li id="howMany"><input type="range" min="1" max="15" value="How Many" /></li>
+                        </ul>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset>
+                <legend>Extra Information</legend>
+                <ul>
+                    <li><label for="occasion">Occasion:</label><input type="text" id="occasion"/></li>
+                    <li><label for="notes">Notes:</label><textarea id="notes"></textarea></li>
+                </ul>
+            </fieldset>
+            <input type="button" id="save" value="Add to Cart">
+        </form>
+    </body>
+</html>
