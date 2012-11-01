@@ -14,35 +14,28 @@
         <nav>
             <a href="#" id="clearstoreddata">Clear All Decorating Supplies</a>
             <a href="#" id="displaydata">My Decorations</a>
+            <a href="additem.html" id="addItem">Add More Decor</a>
         </nav>
         <form action="" method="post" id="decorateForm">
             <fieldset>
                 <legend>Choose Decorating Supplies</legend>
                 <ul>
                     <li id="select"><label for="type">Choose Type</label><br /></li>
-                    <!-- <li>Type
-                        <ul>
-                            <li><input type="radio" value="Tinsel" id="tinsel" name="type" /><label for="tinsel">Tinsel</label></li>
-                            <li><input type="radio" value="Lights" id="lights" name="type" /><label for="lights">Lights</label></li>
-                            <li><input type="radio" value="Ceiling Decorations" id="ceilingdecorations" name="type" /><label for="ceilingdecorations">Ceiling Decorations</label></li>
-                            <li><input type="radio" value="Balloons" id="ballons" name="type" /><label for="balloons">Balloons</label></li>
-                        </ul>
-                    </li> -->
                 </ul>
             </fieldset>
             <fieldset>
                 <legend>Customize Supplies</legend>
                 <ul>
-                    <li>Balloon Color Type
+                    <li id="balloon" style="display:none">Balloon Color Type
                         <ul>
                             <li><input type="radio" value="Metallic" id="metallic" name="balloonType" /><label for="metallic">Metallic</label></li>
                             <li><input type="radio" value="Regular" id="regular" name="balloonType" /><label for="regular">Regular</label></li>
                         </ul>
                     </li>
-                    <li>Tinsel Colors
+                    <li id="tinsel" style="display:none">Tinsel Colors
                         <ul>
-                            <li><input type="radio" value="Multiple Colors" id="multiple" name="TinselType" /><label for="multiple">Multiple Colors in Tinsels</label></li>
-                            <li><input type="radio" value="Separated Colors" id="separate" name="TinselType" /><label for="separate">Separate Tinsels</label></li>
+                            <li><input type="radio" value="Multiple Colors" id="multiple" name="tinselType" /><label for="multiple">Multiple Colors in Tinsels</label></li>
+                            <li><input type="radio" value="Separated Colors" id="separate" name="tinselType" /><label for="separate">Separate Tinsels</label></li>
                         </ul>
                     </li>
                     <li>Color(s)
@@ -61,7 +54,7 @@
                     </li>
                     <li>How Many Packs Do You Want?
                         <ul>
-                            <li id="howMany"><input type="range" min="1" max="15" value="How Many" /></li>
+                            <li id="howMany"><input type="range" min="1" max="15" /></li>
                         </ul>
                     </li>
                 </ul>
