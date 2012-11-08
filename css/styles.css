@@ -33,10 +33,6 @@ a:hover {
     color: #fff;
 }
 
-input{
-	display: block;
-}
-
 input:focus {
     border: inset #666;
 }

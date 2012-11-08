@@ -23,10 +23,10 @@ window.addEventListener("DOMContentLoaded", function() {
     	white = getId("white"),
     	yellow = getId("yellow"),
     	gray = getId("gray"),
-    	x,
     	balloonTypeValue,
     	tinselTypeValue,
-    	colors = [];
+        sliderValue,
+        colors = [];
 
     function toggleDisplay(n){
         switch(n){
@@ -103,69 +103,24 @@ window.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-    function bluePush(){
-    	if(blue.checked){
-    		colors.push(blue.value);
-    	}
+    function colorsPush() {
+        var myColors = [blue, green, red, pink, purple, orange, black, white, yellow, gray];
+        for(var i=0, j=myColors.length; i<j; i++) {
+            if (myColors[i].checked){
+                colors.push(myColors[i].value);
+            }
+        }
     };
 
-    function greenPush(){
-    	if(green.checked){
-    		colors.push(green.value);
-    	}
+    function sliderChange(val) {
+        getId("howMany").value.innerHTML = val
     };
 
-    function redPush(){
-    	if(red.checked){
-    		colors.push(red.value);
-    	}
-    };
-
-    function pinkPush(){
-    	if(pink.checked){
-    		colors.push(pink.value);
-    	}
-    };
-
-    function purplePush(){
-    	if(purple.checked){
-    		colors.push(purple.value);
-    	}
-    };
-
-    function orangePush(){
-    	if(orange.checked){
-    		colors.push(orange.value);
-    	}
-    };
-
-    function blackPush(){
-    	if(black.checked){
-    		colors.push(black.value);
-    	}
-    };
-
-    function whitePush(){
-    	if(white.checked){
-    		colors.push(white.value);
-    	}
-    };
-
-    function yellowPush(){
-    	if(yellow.checked){
-    		colors.push(yellow.value);
-    	}
-    };
-
-    function grayPush(){
-    	if(gray.checked){
-    		colors.push(gray.value);
-    	}
-    };	
 
 	function saveData(){
 
 		var id = Math.floor(Math.random()*10000001);
+        sliderChange();
 		getBalloonType();
 		getTinselType();
 		var decor = {};
@@ -178,6 +133,7 @@ window.addEventListener("DOMContentLoaded", function() {
 			decor.colors = ["Color(s): ", colors];
 			decor.occasion = ["Occasion: ", getId("occasion").value];
 			decor.notes = ["Notes: ", getId("notes").value];
+            decor.packs = ["How many packs? : ", getId("howMany").value];
 		localStorage.setItem(id, JSON.stringify(decor));
 		alert("Added to Cart!");
 	};
@@ -205,8 +161,29 @@ window.addEventListener("DOMContentLoaded", function() {
                 makeSubli.innerHTML = optSubText;
                 makeSubList.appendChild(links);
             }
+            makeItemLinks(localStorage.key(i), links);
         }
 	};
+
+    function makeItemLinks(key, links){
+        var editLink = document.createElement("a");
+        editLink.href = "#";
+        editLink.key = key;
+        var editText = "Edit Item";
+        //editLink.addEventListener("click", editItem);
+        editLink.innerHTML = editText;
+        links.appendChild(editLink);
+        editLink.style.display = "block"
+
+        var deleteLink = document.createElement("a");
+        deleteLink.href = "#";
+        deleteLink.key = key;
+        var deleteText = "Remove Item";
+        //deleteLink.addEventListener("click", deleteItem);
+        deleteLink.innerHTML = deleteText;
+        deleteLink.style.display = "block"
+        links.appendChild(deleteLink);
+    }
 
 	function clearData() {
         if (localStorage.length === 0) {
@@ -221,19 +198,11 @@ window.addEventListener("DOMContentLoaded", function() {
     }
 
 
+
 	makeType();
-	blue.addEventListener("click", bluePush);
-	green.addEventListener("click", greenPush);
-	red.addEventListener("click", redPush);
-	pink.addEventListener("click", pinkPush);
-	purple.addEventListener("click", purplePush);
-	orange.addEventListener("click", orangePush);
-	black.addEventListener("click", blackPush);
-	white.addEventListener("click", whitePush);
-	yellow.addEventListener("click", yellowPush);
-	gray.addEventListener("click", grayPush);
 	getId("type").addEventListener("click", toggles);
-	save.addEventListener("click", saveData);
+    save.addEventListener("click", colorsPush);
+    save.addEventListener("click", saveData);
 	displayData.addEventListener("click", getData);
 	clear.addEventListener("click", clearData);
 

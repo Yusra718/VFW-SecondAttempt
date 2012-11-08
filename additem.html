@@ -11,7 +11,9 @@
         <link href="css/styles.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Decorating Supplies</h1>
+        <header>
+            <h1>Decorating Supplies</h1>
+        </header>
         <nav>
             <a href="#" id="clearstoreddata">Clear All Decor</a>
             <a href="#" id="displaydata">My Decor</a>
@@ -55,7 +57,7 @@
                     </li>
                     <li>How Many Packs Do You Want?
                         <ul>
-                            <li id="howMany"><input type="range" min="1" max="15" /></li>
+                            <li><input id="howMany" type="range" min="1" max="10" value="5" step="1" onChange="sliderChange(this.value)" /></li>
                         </ul>
                     </li>
                 </ul>
@@ -70,5 +72,9 @@
             <input type="button" id="save" value="Add to Cart">
         </form>
         <script src="js/main.js" type="text/javascript"></script>
+        <script language="javascript">
+                var today = new Date();
+                document.write(today);
+        </script>
     </body>
 </html>
