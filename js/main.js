@@ -117,9 +117,13 @@ window.addEventListener("DOMContentLoaded", function() {
     };
 
 
-	function saveData(){
+	function saveData(key){
 
-		var id = Math.floor(Math.random()*10000001);
+		if(!key){
+            var id = Math.floor(Math.random()*10000001);
+        } else {
+            id = key;
+        }
         sliderChange();
 		getBalloonType();
 		getTinselType();
@@ -131,12 +135,8 @@ window.addEventListener("DOMContentLoaded", function() {
 				decor.tinselType = ["Tinsel Type: ", tinselTypeValue];
 			}
 			decor.colors = ["Color(s): ", colors];
-			if(getId("occasion").value !== ""){
-                decor.occasion = ["Occasion: ", getId("occasion").value];
-            }
-            if(getId("notes").value !== ""){
-                decor.notes = ["Notes: ", getId("notes").value];
-            }
+            decor.occasion = ["Occasion: ", getId("occasion").value];
+            decor.notes = ["Notes: ", getId("notes").value];
             decor.packs = ["How many packs? : ", getId("howMany").value];
 		localStorage.setItem(id, JSON.stringify(decor));
 		alert("Added to Cart!");
@@ -183,7 +183,7 @@ window.addEventListener("DOMContentLoaded", function() {
         remove.href = "#";
         remove.key = key;
         var removeText = "Remove Item";
-        //remove.addEventListener("click", deleteItem);
+        remove.addEventListener("click", deleteItem);
         remove.innerHTML = removeText;
         links.appendChild(remove);
         remove.style.display = "block"
@@ -227,12 +227,22 @@ window.addEventListener("DOMContentLoaded", function() {
         getId("notes").value = decor.notes[1];
         getId("howMany").value = decor.packs[1];
 
-        //save.removeEventListener("click", saveData);
+        save.removeEventListener("click", validate);
         getId("save").value = "Edit Item";
         var editSave = getId("save");
         editSave.addEventListener("click", validate);
         editSave.key = this.key;
 
+    }
+
+    function deleteItem(){
+        var ask = confirm("Remove from cart?");
+        if(ask){
+            localStorage.removeItem(this.key);
+            window.location.reload();
+        }else{
+            alert("Item NOT removed.")
+        }
     }
 
     function validate(eventData){
@@ -296,7 +306,7 @@ window.addEventListener("DOMContentLoaded", function() {
             eventData.preventDefault();
             return false;
         } else {
-            saveData();
+            saveData(this.key);
         }
         
     }
