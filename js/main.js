@@ -25,7 +25,8 @@ window.addEventListener("DOMContentLoaded", function() {
     	gray = getId("gray"),
     	balloonTypeValue,
     	tinselTypeValue,
-        sliderValue,
+        myColors = [blue, green, red, pink, purple, orange, black, white, yellow, gray],
+        errorList = getId("error"),
         colors = [];
 
     function toggleDisplay(n){
@@ -104,7 +105,6 @@ window.addEventListener("DOMContentLoaded", function() {
     };
 
     function colorsPush() {
-        var myColors = [blue, green, red, pink, purple, orange, black, white, yellow, gray];
         for(var i=0, j=myColors.length; i<j; i++) {
             if (myColors[i].checked){
                 colors.push(myColors[i].value);
@@ -131,8 +131,12 @@ window.addEventListener("DOMContentLoaded", function() {
 				decor.tinselType = ["Tinsel Type: ", tinselTypeValue];
 			}
 			decor.colors = ["Color(s): ", colors];
-			decor.occasion = ["Occasion: ", getId("occasion").value];
-			decor.notes = ["Notes: ", getId("notes").value];
+			if(getId("occasion").value !== ""){
+                decor.occasion = ["Occasion: ", getId("occasion").value];
+            }
+            if(getId("notes").value !== ""){
+                decor.notes = ["Notes: ", getId("notes").value];
+            }
             decor.packs = ["How many packs? : ", getId("howMany").value];
 		localStorage.setItem(id, JSON.stringify(decor));
 		alert("Added to Cart!");
@@ -166,23 +170,135 @@ window.addEventListener("DOMContentLoaded", function() {
 	};
 
     function makeItemLinks(key, links){
-        var editLink = document.createElement("a");
-        editLink.href = "#";
-        editLink.key = key;
+        var edit = document.createElement("a");
+        edit.href = "#";
+        edit.key = key;
         var editText = "Edit Item";
-        //editLink.addEventListener("click", editItem);
-        editLink.innerHTML = editText;
-        links.appendChild(editLink);
-        editLink.style.display = "block"
+        edit.addEventListener("click", editItem);
+        edit.innerHTML = editText;
+        links.appendChild(edit);
+        edit.style.display = "block"
 
-        var deleteLink = document.createElement("a");
-        deleteLink.href = "#";
-        deleteLink.key = key;
-        var deleteText = "Remove Item";
-        //deleteLink.addEventListener("click", deleteItem);
-        deleteLink.innerHTML = deleteText;
-        deleteLink.style.display = "block"
-        links.appendChild(deleteLink);
+        var remove = document.createElement("a");
+        remove.href = "#";
+        remove.key = key;
+        var removeText = "Remove Item";
+        //remove.addEventListener("click", deleteItem);
+        remove.innerHTML = removeText;
+        links.appendChild(remove);
+        remove.style.display = "block"
+    }
+
+    function editItem() {
+        var value = localStorage.getItem(this.key);
+        var decor = JSON.parse(value);
+
+        toggleDisplay("off");
+
+        getId("type").value = decor.dectype[1];
+        if (decor.dectype[1] == "Balloons"){
+            var balloonRadios = document.forms[0].balloonType;
+            for(var i=0, j=balloonRadios.length; i<j; i++){
+                if(balloonRadios[i].value == "Metallic" && decor.balloonType[1] == "Metallic"){
+                    balloonRadios[i].setAttribute("checked", "checked");
+                } else if(balloonRadios[i].value == "Regular" && decor.balloonType[1] == "Regular"){
+                    balloonRadios[i].setAttribute("checked", "checked");
+                }
+            }
+        } else if (decor.dectype[1] == "Tinsel"){
+            var tinselRadios = document.forms[0].tinselType;
+            for(var i=0, j=tinselRadios.length; i<j; i++){
+                if(tinselRadios[i].value == "Multiple Colors" && decor.tinselType[1] == "Multiple Colors"){
+                    tinselRadios[i].setAttribute("checked", "checked");
+                } else if(tinselRadios[i].value == "Separated Colors" && decor.tinselType[1] == "Separated Colors"){
+                    tinselRadios[i].setAttribute("checked", "checked");
+                }
+            }
+        }
+        
+        for(var k=0, l=colors.length; k<l; k++){
+            for(var i=0, j=myColors.length; i<j; i++){
+                if (colors[k] == myColors[i].value){
+                    myColors[i].setAttribute("checked", "checked");
+                } 
+            }
+        }
+        getId("occasion").value = decor.occasion[1];
+        getId("notes").value = decor.notes[1];
+        getId("howMany").value = decor.packs[1];
+
+        //save.removeEventListener("click", saveData);
+        getId("save").value = "Edit Item";
+        var editSave = getId("save");
+        editSave.addEventListener("click", validate);
+        editSave.key = this.key;
+
+    }
+
+    function validate(eventData){
+        errorList.innerHTML = "";
+        getId("type").style.border = "none";
+        getId("colors").style.border = "none";
+        getId("packs").style.border = "none"
+        var errors = [],
+        validatingTinsel = [],
+        validatingBalloons = [];
+        if(getId("type").value == "What would you like?"){
+            var typeError = "Please choose Type.";
+            getId("type").style.border = "1px solid red";
+            errors.push(typeError);
+        } else if(getId("type").value == "Tinsel"){
+            var tinselValidate = document.forms[0].tinselType;
+            for(var i=0, j=tinselValidate.length; i<j; i++){
+                if(tinselValidate[i].checked){
+                    validatingTinsel.push(tinselValidate[i].value);
+                }
+            }
+            if(validatingTinsel.length === 0){
+                 var tinselTypeError = "Please choose Tinsel Type.";
+                 getId("tinsel").style.border = "1px solid red";
+                 errors.push(tinselTypeError);
+            } else if(validatingTinsel.length >=1){
+                getId("tinsel").style.border = "none";
+            }
+        } else if(getId("type").value == "Balloons"){
+            var balloonValidate = document.forms[0].balloonType;
+            for(var i=0, j=balloonValidate.length; i<j; i++){
+                if(balloonValidate[i].checked){
+                    validatingBalloons.push(balloonValidate[i].value);
+                }
+            }
+            if(validatingBalloons.length === 0){
+                 var balloonTypeError = "Please choose Balloon Type.";
+                 getId("balloon").style.border = "1px solid red";
+                 errors.push(balloonTypeError);
+            } else if(validatingBalloons.length >=1){
+                getId("balloon").style.border = "none";
+            }
+        }
+        if(colors.length === 0){
+            var colorsError = "A minimum of one color chosen is required.";
+            getId("colors").style.border = "1px solid red";
+            errors.push(colorsError);
+        }
+        if(getId("howMany").value == "0"){
+            var packsError = "Please choose a minimum of one pack.";
+            getId("packs").style.border = "1px solid red"
+            errors.push(packsError);
+        }
+        if(errors.length >=1){
+            for(var i=0, j=errors.length; i<j; i++){
+                var errorText = document.createElement("li");
+                errorText.innerHTML = errors[i];
+                errorList.appendChild(errorText);
+                errorList.style.color = "red";
+            }
+            eventData.preventDefault();
+            return false;
+        } else {
+            saveData();
+        }
+        
     }
 
 	function clearData() {
@@ -202,7 +318,7 @@ window.addEventListener("DOMContentLoaded", function() {
 	makeType();
 	getId("type").addEventListener("click", toggles);
     save.addEventListener("click", colorsPush);
-    save.addEventListener("click", saveData);
+    save.addEventListener("click", validate);
 	displayData.addEventListener("click", getData);
 	clear.addEventListener("click", clearData);
 

@@ -20,6 +20,7 @@
             <a href="additem.html" id="addItem">Add Decor</a>
         </nav>
         <form action="" method="post" id="decorateForm">
+            <ul id="error"></ul>
             <fieldset>
                 <legend>Choose Decorating Supplies</legend>
                 <ul>
@@ -41,7 +42,7 @@
                             <li><input type="radio" value="Separated Colors" id="separate" name="tinselType" /><label for="separate">Separate Tinsels</label></li>
                         </ul>
                     </li>
-                    <li>Color(s)
+                    <li id="colors">Color(s)
                         <ul>
                             <li><input type="checkbox" value="Blue" id="blue" /><label for="blue">Blue</label></li>
                             <li><input type="checkbox" value="Green" id="green" /><label for="green">Green</label></li>
@@ -55,9 +56,9 @@
                             <li><input type="checkbox" value="Gray" id="gray" /><label for="gray">Gray</label></li>
                         </ul>
                     </li>
-                    <li>How Many Packs Do You Want?
+                    <li id="packs">How Many Packs Do You Want?
                         <ul>
-                            <li><input id="howMany" type="range" min="1" max="10" value="5" step="1" onChange="sliderChange(this.value)" /></li>
+                            <li><input id="howMany" type="range" min="0" max="10" value="0" step="1" onChange="sliderChange(this.value)" /></li>
                         </ul>
                     </li>
                 </ul>
