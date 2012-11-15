@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", function() {
         return element
     };
 
-    var decorType = ["What would you like?", "Tinsel", "Lights", "Ceiling Decorations", "Balloons"],
+    var decorType = ["What would you like?", "Tinsel", "Lights", "Ceiling", "Balloons"],
     	save = getId("save"),
     	displayData = getId("displaydata"),
     	clear = getId("clearstoreddata"),
@@ -105,6 +105,7 @@ window.addEventListener("DOMContentLoaded", function() {
     };
 
     function colorsPush() {
+        colors = [];
         for(var i=0, j=myColors.length; i<j; i++) {
             if (myColors[i].checked){
                 colors.push(myColors[i].value);
@@ -124,10 +125,9 @@ window.addEventListener("DOMContentLoaded", function() {
         } else {
             id = key;
         }
-        sliderChange();
 		getBalloonType();
 		getTinselType();
-		var decor = {};
+        var decor = {};
 			decor.dectype = ["Type: ", getId("type").value];
 			if(getId("type").value == "Balloons"){
 				decor.balloonType = ["Balloon Type: ", balloonTypeValue];
@@ -210,19 +210,20 @@ window.addEventListener("DOMContentLoaded", function() {
             for(var i=0, j=tinselRadios.length; i<j; i++){
                 if(tinselRadios[i].value == "Multiple Colors" && decor.tinselType[1] == "Multiple Colors"){
                     tinselRadios[i].setAttribute("checked", "checked");
-                } else if(tinselRadios[i].value == "Separated Colors" && decor.tinselType[1] == "Separated Colors"){
+                } else if(tinselRadios[i].value == "Separate Colors" && decor.tinselType[1] == "Separate Colors"){
                     tinselRadios[i].setAttribute("checked", "checked");
                 }
             }
         }
-        
-        for(var k=0, l=colors.length; k<l; k++){
+
+        for(var k=0, l=decor.colors[1].length; k<l; k++){
             for(var i=0, j=myColors.length; i<j; i++){
-                if (colors[k] == myColors[i].value){
+                if (decor.colors[1][k] == myColors[i].value){
                     myColors[i].setAttribute("checked", "checked");
                 } 
             }
         }
+
         getId("occasion").value = decor.occasion[1];
         getId("notes").value = decor.notes[1];
         getId("howMany").value = decor.packs[1];
@@ -241,7 +242,7 @@ window.addEventListener("DOMContentLoaded", function() {
             localStorage.removeItem(this.key);
             window.location.reload();
         }else{
-            alert("Item NOT removed.")
+            alert("Item NOT removed.");
         }
     }
 
@@ -307,6 +308,7 @@ window.addEventListener("DOMContentLoaded", function() {
             return false;
         } else {
             saveData(this.key);
+            window.location.reload();
         }
         
     }
