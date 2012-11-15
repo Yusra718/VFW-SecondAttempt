@@ -14,8 +14,8 @@ body{
 }
 
 fieldset{
-	border: 3px;
-	border: double black;
+	border: 1px;
+	border: solid black;
 }
 
 header{

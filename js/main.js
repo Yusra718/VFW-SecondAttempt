@@ -23,6 +23,7 @@ window.addEventListener("DOMContentLoaded", function() {
     	white = getId("white"),
     	yellow = getId("yellow"),
     	gray = getId("gray"),
+        sliderChange,
     	balloonTypeValue,
     	tinselTypeValue,
         myColors = [blue, green, red, pink, purple, orange, black, white, yellow, gray],
@@ -113,11 +114,6 @@ window.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-    function sliderChange(val) {
-        getId("howMany").value.innerHTML = val
-    };
-
-
 	function saveData(key){
 
 		if(!key){
@@ -144,6 +140,10 @@ window.addEventListener("DOMContentLoaded", function() {
 
 	function getData(){
 		toggleDisplay("on");
+        if(localStorage.length === 0){
+            alert("You have not added any data, so default data was added.");
+            defaultData();
+        }
         var makeDiv = document.createElement("div");
         makeDiv.setAttribute("id", "decor");
         var makeList = document.createElement("ul");
@@ -158,6 +158,7 @@ window.addEventListener("DOMContentLoaded", function() {
             var obj = JSON.parse(value);
             var makeSubList = document.createElement("ul");
             makeli.appendChild(makeSubList);
+            storeImage(obj.dectype[1], makeSubList);
             for (var n in obj){
                 var makeSubli = document.createElement("li");
                 makeSubList.appendChild(makeSubli);
@@ -168,6 +169,14 @@ window.addEventListener("DOMContentLoaded", function() {
             makeItemLinks(localStorage.key(i), links);
         }
 	};
+
+    function storeImage(image, makeSubList){
+        var imageLi = document.createElement("li");
+        makeSubList.appendChild(imageLi);
+        var imgTag = document.createElement("img");
+        var makeSrc = imgTag.setAttribute("src", "Img/"+ image + ".jpeg");
+        imageLi.appendChild(imgTag);
+    }
 
     function makeItemLinks(key, links){
         var edit = document.createElement("a");
@@ -220,7 +229,7 @@ window.addEventListener("DOMContentLoaded", function() {
             for(var i=0, j=myColors.length; i<j; i++){
                 if (decor.colors[1][k] == myColors[i].value){
                     myColors[i].setAttribute("checked", "checked");
-                } 
+                }
             }
         }
 
@@ -313,6 +322,13 @@ window.addEventListener("DOMContentLoaded", function() {
         
     }
 
+    function defaultData(){
+        for(var d in json){
+            var id = Math.floor(Math.random()*10000001);
+            localStorage.setItem(id, JSON.stringify(json[d]));
+        }
+    }
+
 	function clearData() {
         if (localStorage.length === 0) {
             alert("Nothing to clear!")
@@ -324,8 +340,6 @@ window.addEventListener("DOMContentLoaded", function() {
             return false;
         }
     }
-
-
 
 	makeType();
 	getId("type").addEventListener("click", toggles);

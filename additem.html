@@ -9,6 +9,11 @@
         <meta name="viewport" content="user-scalable=yes, width=device-width" />
         <title>The Holiday Spirit</title>
         <link href="css/styles.css" rel="stylesheet">
+        <script type="text/javascript">
+            function sliderChange(val) {
+                document.getElementById('sliderStatus').innerHTML = val;
+            }
+        </script>
     </head>
     <body>
         <header>
@@ -59,6 +64,7 @@
                     <li id="packs">How Many Packs Do You Want?
                         <ul>
                             <li><input id="howMany" type="range" min="0" max="10" value="0" step="1" onChange="sliderChange(this.value)" /></li>
+                            Packs = <span id="sliderStatus">0</span>
                         </ul>
                     </li>
                 </ul>
